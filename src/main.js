@@ -8,7 +8,6 @@ client.once('ready', () => {
 
 client.on('message', (message) => {
     if (message.author.bot) return
-    message.channel.send(message.content)
 })
 
 client.login(process.env.TOKEN)
