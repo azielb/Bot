@@ -1,9 +1,10 @@
+require("dotenv").config();
+
 module.exports = (discord, client, message) => {
-    const prefix = '.';
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return
+    if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) return
 
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
     const cmd_Name = args.shift().toLowerCase();
     const command = client.commands.get(cmd_Name);
 
