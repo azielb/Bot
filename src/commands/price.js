@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const CoinMarketCap = require('coinmarketcap-api');
-const { Collection } = require("discord.js");
 const cmc = new CoinMarketCap(process.env.COIN_MARKET_CAP_API_KEY);
 
 module.exports = {
