@@ -8,7 +8,8 @@ const google = new Scraper({
 
 module.exports = {
     name: "monkey",
-    async execute(client, message) {
+    description: "Sends a random monkey image to a channel",
+    async execute(_, message) {
         const results = await google.scrape('monkey', 1000);
         message.channel.send(results[Math.floor(Math.random() * results.length)].url);
     }
