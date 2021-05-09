@@ -8,7 +8,7 @@ module.exports = (discord, client, message) => {
         const command = client.commands.get(cmd_Name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmd_Name));
     
         if (command) command.execute(client, message, discord, args);
-    } else if (message.content.includes(process.env.OWNER_NAME)) {
+    } else if (message.content.toLowerCase().includes(process.env.OWNER_NAME)) {
         message.reply("You dare speak about my master?");
     }
 }

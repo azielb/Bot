@@ -26,7 +26,7 @@ module.exports = {
                 .setColor('#00FF00')
                 .setTitle(name)
                 .setAuthor(process.env.BOT_NAME, avatar)
-                .setDescription('Price: ' + '$' + info.data[`${SYMBOL}`].quote.USD.price)
+                .setDescription('Price: ' + '$' + info.data[`${SYMBOL}`].quote.USD.price + '[USD]')
                 .setTimestamp()
 
             message.channel.send(embed);
