@@ -6,6 +6,6 @@ module.exports = {
     name: "clown",
     description: "Clown video",
     async execute(_, message) {
-        message.channel.send(link)
+        message.channel.send(link);
     }
 }

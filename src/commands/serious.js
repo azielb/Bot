@@ -6,6 +6,6 @@ module.exports = {
     name: "serious",
     description: "Seriously?",
     async execute(_, message) {
-        message.channel.send(link)
+        message.channel.send(link);
     }
 }
