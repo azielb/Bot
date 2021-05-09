@@ -10,7 +10,7 @@ module.exports = {
         const embed = new discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Commands')
-            .setAuthor('ZickBot', avatar)
+            .setAuthor(process.env.BOT_NAME, avatar)
             .setDescription(`Prefix: '${process.env.PREFIX}'`)
             .setTimestamp()
 

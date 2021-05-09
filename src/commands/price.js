@@ -25,7 +25,7 @@ module.exports = {
             const embed = new discord.MessageEmbed()
                 .setColor('#00FF00')
                 .setTitle(name)
-                .setAuthor('ZickBot', avatar)
+                .setAuthor(process.env.BOT_NAME, avatar)
                 .setDescription('Price: ' + '$' + info.data[`${SYMBOL}`].quote.USD.price)
                 .setTimestamp()
 
