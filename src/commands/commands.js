@@ -15,14 +15,15 @@ module.exports = {
             .setTimestamp()
 
         for (const [cmd_Name, cmd] of client.commands) {
-            var aliases = "";
-            
-            if (cmd.aliases) { 
-                for (const alias of cmd.aliases)
+            if (cmd.aliases) {
+                var aliases = "";
+                for (const alias of cmd.aliases) {
                     aliases += `'${alias}', `;
+                }      
+                embed.addField(`${cmd_Name}`, `Description: ${cmd.description}\nAliases: ${aliases}`, false);
+            } else {
+                embed.addField(`${cmd_Name}`, `Description: ${cmd.description}`, false);
             }
-          
-            embed.addField(`${cmd_Name}`, `Description: ${cmd.description}\nAliases: ${aliases}`, false);
         }
 
         client.users.cache.get(id).send(embed);
