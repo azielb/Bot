@@ -6,11 +6,16 @@ const google = new Scraper({
     }
 })
 
+const clamp = function(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+}
+
 module.exports = {
     name: "monkey",
     description: "Sends a random monkey image to a channel",
     async execute(_, message) {
         const results = await google.scrape('monkey', 1000);
-        message.channel.send(results[Math.floor(Math.random() * results.length)].url);
+        const index = clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
+        message.channel.send(results[index].url);
     }
 } 
