@@ -1,9 +1,16 @@
 const Scraper = require('images-scraper');
 const max_images = 1000;
 const ERROR_MESSAGE = "Failed to retrieve the image.";
-const google = new Scraper({
+const results = new Array();
+
+new Scraper({
     puppeteer: {
         headless: true
+    }
+}).scrape('monkey', max_images).then((r) => {
+    console.log("Finished scraping for monkey images.");
+    for (result of r) {
+        results.push(result);
     }
 })
 
@@ -15,14 +22,8 @@ module.exports = {
     name: "monkey",
     description: "Sends a random monkey image to a channel",
     async execute(_, message) {
-        google.scrape('monkey', max_images).then((results) => {
-            const index = clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
-            if (!typeof(results[index].url) === "string") {
-                message.channel.send(ERROR_MESSAGE);
-            } else {
-                message.channel.send(results[index].url);
-            }
-        }).catch(() => {
+        const index = clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
+        message.channel.send(results[index].url).catch(() => {
             message.channel.send(ERROR_MESSAGE);
         })
     }
