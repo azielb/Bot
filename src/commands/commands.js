@@ -3,7 +3,7 @@ require("dotenv").config();
 module.exports = {
     name: "commands",
     description: "Lists every command",
-    aliases: ['cmds'],
+    aliases: ['cmds', 'help'],
     async execute(client, message, discord) {
         const id = message.author.id;
         const avatar = await client.users.cache.get(client.user.id).avatarURL();

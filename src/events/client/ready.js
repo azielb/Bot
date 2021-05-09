@@ -1,6 +1,8 @@
-module.exports = (_, client, __) => {
+require("dotenv").config();
+
+module.exports = (_, client) => {
     console.log(`${client.user.username} [ONLINE]`);
-    client.user.setActivity("FUNCTIONAL", {
-        type: "STREAMING",
+    client.user.setActivity(`${process.env.PREFIX}commands | ${process.env.PREFIX}help`, {
+        type: "WATCHING",
     });
 }
