@@ -1,5 +1,14 @@
 require("dotenv").config();
 
+/*
+    execute(
+        client: client object
+        message: message object
+        discord: discord object
+        args: any extra text
+    )
+*/
+
 module.exports = (discord, client, message) => {
     if (message.author.bot) return
     if (message.content.startsWith(process.env.PREFIX)) {
