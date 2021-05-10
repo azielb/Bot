@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 // _ = "discord"
 module.exports = (_, client) => {
     console.log(`${client.user.username} [ONLINE]`);

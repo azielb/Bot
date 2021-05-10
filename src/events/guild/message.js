@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 /*
     execute(
         client: client object

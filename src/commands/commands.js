@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 module.exports = {
     name: "commands",
     description: "Lists every command",

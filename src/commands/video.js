@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const videos = {
     clown: "https://cdn.discordapp.com/attachments/764447332288561152/841022684053635072/Clown.mov",
     serious: "https://cdn.discordapp.com/attachments/586713238016622593/840771120278011964/serious.mp4",
