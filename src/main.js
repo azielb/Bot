@@ -9,4 +9,4 @@ client.events = new discord.Collection();
     require(`./handlers/${handler}`)(client, discord);
 })
 
-client.login(process.env.TOKEN);
+client.login(process.env.DISCORD_TOKEN);
