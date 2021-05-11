@@ -20,7 +20,6 @@ module.exports = {
         var symbols = new Array(); symbols.push(SYMBOL);
 
         cmc.getGlobal(`${SYMBOL}`).then((info) => {
-            console.log(info);
             cmc.getQuotes({symbol: symbols}).then((quote_data) => {
                 const name = quote_data.data[`${SYMBOL}`].name
                 const dominance = `Bitcoin dominance: ${round(info.data.btc_dominance)}%\nEthereum dominance: ${round(info.data.eth_dominance)}%`;
