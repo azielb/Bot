@@ -10,13 +10,15 @@ new Scraper({
         headless: true
     }
 }).scrape('monkey', max_images).then((r) => {
-    console.log("Finished scraping for monkey images.");
-    ready = true;
     for (result of r) {
-        results.push(result).catch((e) => {
+        try {
+            results.push(result);  
+        } catch (e) {
             console.log(`${SCRAPE_ERROR_MESSAGE} ${e}`);
-        });
+        }
     }
+    ready = true;
+    console.log("Finished caching monkey images.");
 }).catch((e) => {
     console.log(`${SCRAPE_ERROR_MESSAGE} ${e}`);
 })
