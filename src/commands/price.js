@@ -1,6 +1,10 @@
 const CoinMarketCap = require('coinmarketcap-api');
 const cmc = new CoinMarketCap(process.env.COIN_MARKET_CAP_API_KEY);
 
+function round(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
 module.exports = {
     name: "price",
     description: "Gets the current sell price of the specified crypto currency",
@@ -14,20 +18,26 @@ module.exports = {
         const avatar = await client.users.cache.get(client.user.id).avatarURL();
         const SYMBOL = args.join(' ').toUpperCase();
         var symbols = new Array(); symbols.push(SYMBOL);
-        const info = await cmc.getQuotes({symbol: symbols});
 
-        if (!info || info.status.error_code !== 0)
-            message.channel.send(`${SYMBOL} is invalid`)
-        else {
-            const name = info.data[`${SYMBOL}`].name
-            const embed = new discord.MessageEmbed()
-                .setColor('#00FF00')
-                .setTitle(name)
-                .setAuthor(process.env.BOT_NAME, avatar)
-                .setDescription('Price: ' + '$' + info.data[`${SYMBOL}`].quote.USD.price + ' [USD]')
-                .setTimestamp()
-
-            message.channel.send(embed);
-        }
+        cmc.getGlobal(`${SYMBOL}`).then((info) => {
+            console.log(info);
+            cmc.getQuotes({symbol: symbols}).then((quote_data) => {
+                const name = quote_data.data[`${SYMBOL}`].name
+                const dominance = `Bitcoin dominance: ${round(info.data.btc_dominance)}%\nEthereum dominance: ${round(info.data.eth_dominance)}%`;
+                const embed = new discord.MessageEmbed()
+                    .setColor('#00FF00')
+                    .setTitle(name)
+                    .addField(dominance, '\u200B', true)
+                    .setAuthor(process.env.BOT_NAME, avatar)
+                    .setDescription('Price: ' + '$' + quote_data.data[`${SYMBOL}`].quote.USD.price + ' [USD]')
+                    .setTimestamp()
+    
+                message.channel.send(embed);
+            }).catch(() => {
+                message.channel.send(`Something went wrong getting ${SYMBOL}'s quote data`);
+            })
+        }).catch(() => {
+            message.channel.send(`${SYMBOL} is invalid`);
+        })
     }
 }
