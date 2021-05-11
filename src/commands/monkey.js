@@ -1,6 +1,7 @@
 const Scraper = require('images-scraper');
 const max_images = 10000;
 const ERROR_MESSAGE = "Failed to retrieve the image.";
+const SCRAPE_ERROR_MESSAGE = "ERROR: ";
 const results = new Array();
 var ready = false;
 
@@ -12,10 +13,12 @@ new Scraper({
     console.log("Finished scraping for monkey images.");
     ready = true;
     for (result of r) {
-        results.push(result);
+        results.push(result).catch((e) => {
+            console.log(`${SCRAPE_ERROR_MESSAGE} ${e}`);
+        });
     }
 }).catch((e) => {
-    console.log("Failed to scrape for monkey images!");
+    console.log(`${SCRAPE_ERROR_MESSAGE} ${e}`);
 })
 
 const clamp = function(num, min, max) {
