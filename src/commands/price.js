@@ -1,8 +1,9 @@
 const CoinMarketCap = require('coinmarketcap-api');
 const cmc = new CoinMarketCap(process.env.COIN_MARKET_CAP_API_KEY);
 
-function round(num) {
-    return +(Math.round(num + "e+2")  + "e-2");
+function round(num, places) {
+    places = typeof(places) == "number" && places || 2;
+    return +(Math.round(num + `e+${places}`)  + `e-${places}`);
 }
 
 module.exports = {
@@ -21,8 +22,8 @@ module.exports = {
 
         cmc.getGlobal(`${SYMBOL}`).then((info) => {
             cmc.getQuotes({symbol: symbols}).then((quote_data) => {
-                const name = quote_data.data[`${SYMBOL}`].name
-                const dominance = `Bitcoin dominance: ${round(info.data.btc_dominance)}%\nEthereum dominance: ${round(info.data.eth_dominance)}%`;
+                const name = quote_data.data[`${SYMBOL}`].name;
+                const dominance = `Bitcoin dominance: ${round(info.data.btc_dominance, 3)}%\nEthereum dominance: ${round(info.data.eth_dominance, 3)}%`;
                 const embed = new discord.MessageEmbed()
                     .setColor('#00FF00')
                     .setTitle(name)
