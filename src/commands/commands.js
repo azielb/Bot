@@ -9,7 +9,7 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle('Commands')
             .setAuthor(process.env.BOT_NAME, avatar)
-            .setDescription(`Prefix: '${process.env.PREFIX}'`)
+            .setDescription(`Prefix: ${process.env.PREFIX}`)
             .setTimestamp()
 
         for (const [cmd_Name, cmd] of client.commands) {
