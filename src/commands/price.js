@@ -12,8 +12,7 @@ module.exports = {
     aliases: ['p'],
     async execute(client, message, discord, args) {
         if (args.length === 0) {
-            message.channel.send("Please enter a currency symbol to query");
-            return;
+            message.channel.send("Please enter a currency symbol to query"); return;
         }
 
         const avatar = await client.users.cache.get(client.user.id).avatarURL();
