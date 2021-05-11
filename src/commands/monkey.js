@@ -14,6 +14,8 @@ new Scraper({
     for (result of r) {
         results.push(result);
     }
+}).catch((e) => {
+    console.log("Failed to scrape for monkey images!");
 })
 
 const clamp = function(num, min, max) {
