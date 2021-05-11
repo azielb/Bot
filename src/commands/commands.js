@@ -1,7 +1,7 @@
 module.exports = {
     name: "commands",
     description: "Lists every command",
-    aliases: ['cmds', 'help'],
+    aliases: ['cmds', 'cmd', 'help'],
     async execute(client, message, discord) {
         const id = message.author.id;
         const avatar = await client.users.cache.get(client.user.id).avatarURL();
@@ -16,7 +16,7 @@ module.exports = {
             if (cmd.aliases) {
                 var aliases = "";
                 for (const alias of cmd.aliases) {
-                    aliases += `'${alias}', `;
+                    aliases += `${alias}, `;
                 }      
                 embed.addField(`${cmd_Name}`, `Description: ${cmd.description}\nAliases: ${aliases}`, false);
             } else {
