@@ -1,7 +1,7 @@
 const CoinMarketCap = require('coinmarketcap-api');
 const cmc = new CoinMarketCap(process.env.COIN_MARKET_CAP_API_KEY);
 
-function round(num, places) {
+const round = (num, places) => {
     places = typeof(places) == "number" ? places : 2;
     return +(Math.round(num + `e+${places}`)  + `e-${places}`);
 }
