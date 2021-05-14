@@ -5,6 +5,7 @@ const videos = {
     drip: "https://cdn.discordapp.com/attachments/586713238016622593/841118230457221150/drip.mp4",
     why: "https://cdn.discordapp.com/attachments/764447332288561152/837080024733450240/video0.mp4",
     pause: "https://cdn.discordapp.com/attachments/764447332288561152/842090669605388348/video0.mp4",
+    cap: "https://cdn.discordapp.com/attachments/586713238016622593/842604996226318386/cap.mp4",
 }
 
 module.exports = {
