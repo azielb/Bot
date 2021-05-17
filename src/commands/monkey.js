@@ -1,5 +1,5 @@
 const Scraper = require('images-scraper');
-const max_images = 50000;
+const max_images = 10000;
 const ERROR_MESSAGE = "Failed to retrieve the image.";
 const SCRAPE_ERROR_MESSAGE = "ERROR: ";
 var results = new Array();
@@ -33,7 +33,7 @@ module.exports = {
     description: "Sends a random monkey image to a channel",
     async execute(_, message) {
         if (!ready) {
-            message.channel.send('Have not finished caching monkey images.');
+            message.channel.send('Still caching monkey images.');
             return;
         }
         const index = clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
