@@ -9,8 +9,8 @@ const round = (num, places) => {
 module.exports = {
     name: "price",
     description: "Gets the current sell price of the specified crypto currency",
-    aliases: ['p'],
-    async execute(client, message, discord, args) {
+    aliases: ['pr'],
+    async execute(client, message, args) {
         if (args.length === 0) {
             message.channel.send("Please enter a currency symbol to query"); return;
         }
@@ -23,7 +23,7 @@ module.exports = {
             cmc.getQuotes({symbol: symbols}).then((quote_data) => {
                 const name = quote_data.data[`${SYMBOL}`].name;
                 const dominance = `Bitcoin dominance: ${round(info.data.btc_dominance, 3)}%\nEthereum dominance: ${round(info.data.eth_dominance, 3)}%`;
-                const embed = new discord.MessageEmbed()
+                const embed = new client.discord.MessageEmbed()
                     .setColor('#00FF00')
                     .setTitle(name)
                     .addField(dominance, '\u200B', true)

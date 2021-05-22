@@ -12,12 +12,12 @@ module.exports = {
     name: "video",
     aliases: ['v', 'vid'],
     description: "Sends a the specified video (type .v to get a list of all videos)",
-    async execute(client, message, discord, args) {
+    async execute(client, message, args) {
         const video = args.join(" ").toLowerCase();
         const avatar = await client.users.cache.get(client.user.id).avatarURL();
 
         message.channel.send(videos[`${video}`]).catch(() => {
-            const embed = new discord.MessageEmbed()
+            const embed = new client.discord.MessageEmbed()
                 .setColor('#FF0000')
                 .setTitle("Videos")
                 .setAuthor(process.env.BOT_NAME, avatar)

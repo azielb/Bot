@@ -1,5 +1,4 @@
-// _ = "discord"
-module.exports = (_, client) => {
+module.exports = (client) => {
     console.log(`${client.user.username} [ONLINE]`);
     client.user.setStatus('online');
     client.user.setActivity(`${process.env.PREFIX}commands | ${process.env.PREFIX}help`, {

@@ -2,10 +2,10 @@ module.exports = {
     name: "commands",
     description: "Lists every command",
     aliases: ['cmds', 'cmd', 'help'],
-    async execute(client, message, discord) {
+    async execute(client, message) {
         const id = message.author.id;
         const avatar = await client.users.cache.get(client.user.id).avatarURL();
-        const embed = new discord.MessageEmbed()
+        const embed = new client.discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Commands')
             .setAuthor(process.env.BOT_NAME, avatar)
