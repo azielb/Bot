@@ -6,6 +6,7 @@ module.exports = {
     async execute(client, message, args, cmd) {
         const query = args.join(" ");
         console.log(query)
+        
         client.distube.play(message, query)
 
     }

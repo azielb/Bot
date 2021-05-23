@@ -6,10 +6,6 @@
     )
 */
 
-const clamp = function(num, min, max) {
-    return Math.min(Math.max(num, min), max)
-}
-
 const messages = [
     "You dare speak about my master?",
     "What do you want?",
@@ -28,10 +24,10 @@ module.exports = (client, message) => {
     } else if (message.content.toLowerCase().includes(process.env.OWNER_NAME)) {
 
         if (message.author.id === process.env.OWNER_ID) {
-            return message.reply("Hello master")  
+            return message.reply("Hello, master.")  
         }
 
-        const index = clamp(Math.floor(Math.random() * messages.length), 0, messages.length - 1);
+        const index = client.clamp(Math.floor(Math.random() * messages.length), 0, messages.length - 1);
         message.reply(messages[index]);
     }
 }

@@ -9,14 +9,14 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle('Commands')
             .setAuthor(process.env.BOT_NAME, avatar)
-            .setDescription(`Prefix: ${process.env.PREFIX}`)
+            .setDescription(`Prefix: \`${process.env.PREFIX}\``)
             .setTimestamp()
 
         for (const [cmd_Name, cmd] of client.commands) {
-            if (cmd.aliases) {
+            if (cmd.aliases && cmd.aliases.length > 0) {
                 var aliases = "";
                 for (const alias of cmd.aliases) {
-                    aliases += `${alias}, `;
+                    aliases += `\`${alias}\`,`;
                 }      
                 embed.addField(`${cmd_Name}`, `Description: ${cmd.description}\nAliases: ${aliases}`, false);
             } else {

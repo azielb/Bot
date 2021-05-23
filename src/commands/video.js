@@ -20,7 +20,7 @@ module.exports = {
             const embed = new client.discord.MessageEmbed()
                 .setColor('#FF0000')
                 .setTitle("Videos")
-                .setAuthor(process.env.BOT_NAME, avatar)
+                .setAuthor(process.env.BOT_NAME, client.avatar)
                 .setTimestamp()
 
             var vid_names = "";
