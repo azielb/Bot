@@ -102,14 +102,18 @@ const videoFinder = async (query) => {
     return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
 }
 
-const convertToMinutesAndSeconds = async (time) => {
-    time = parseInt(time)
-    const minutes = Math.floor(time / 60)
-    const seconds = (time % 60)
-    if (seconds < 10) {
-        return `${minutes}:0${seconds}`
+const convertToHMS = async (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+
+    var output = "";
+    if (hours > 0) {
+        output += `${hours}:${(minutes < 10 ? '0' : "")}`;
     }
-    return `${minutes}:${seconds}`
+    output += `${minutes}:${(seconds < 10 ? '0' : "")}`;
+    output += seconds
+    return output;
 }
 
 const playVideo = async (guild, video) => {
@@ -133,7 +137,7 @@ const play = async (message, entry, args, voiceChannel) => {
 
     if (ytdl.validateURL(args[0])) {
         const vidInfo = await ytdl.getInfo(args[0])
-        const time = await convertToMinutesAndSeconds(vidInfo.videoDetails.lengthSeconds)
+        const time = await convertToHMS(vidInfo.videoDetails.lengthSeconds)
         vid = {
             title: vidInfo.videoDetails.title,
             url: args[0],
