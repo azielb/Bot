@@ -54,9 +54,9 @@ module.exports = {
 const disconnectBot = async(message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
     
-    if (!serverQueue) {
+    if (!serverQueue && message.guild.me.voice.channel) {
        return message.guild.me.voice.channel.leave();
-    } else {
+    } else if (serverQueue) {
         stopVideo(message, serverQueue).then(() => {
             serverQueue.voiceChannel.leave();
             return queue.delete(message.guild.id);
