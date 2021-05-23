@@ -3,6 +3,7 @@ const ytSearch = require('yt-search')
 const queue = new Map();
 const ERROR_MESSAGES = {
     NOT_IN_VOICE_CHANNEL: '❌ You must be in a voice channel to execute this command.',
+    BOT_NOT_IN_VOICE_CHANNEL: '❌ Not currently in any voice channels.',
     INCORRECT_PERMISSIONS: '❌ You do not have permission to execute this command.',
     NO_QUERY: '❌ Please enter keywords or a youtube link to query.',
     NO_VIDEOS_IN_QUEUE: '❌There are no videos in the queue.',
@@ -53,10 +54,11 @@ module.exports = {
 
 const disconnectBot = async(message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL)
     
-    if (!serverQueue && message.guild.me.voice.channel) {
+    if (!serverQueue) {
        return message.guild.me.voice.channel.leave();
-    } else if (serverQueue) {
+    } else {
         stopVideo(message, serverQueue).then(() => {
             serverQueue.voiceChannel.leave();
             return queue.delete(message.guild.id);
