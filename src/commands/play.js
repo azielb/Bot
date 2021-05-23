@@ -53,12 +53,15 @@ module.exports = {
 
 const disconnectBot = async(message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
-    if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
     
-    stopVideo(message, serverQueue).then(() => {
-        serverQueue.voiceChannel.leave();
-        return queue.delete(message.guild.id);
-    })
+    if (!serverQueue) {
+       return message.guild.me.voice.channel.leave();
+    } else {
+        stopVideo(message, serverQueue).then(() => {
+            serverQueue.voiceChannel.leave();
+            return queue.delete(message.guild.id);
+        })
+    }
 }
 
 const loopAndUnloopQueue = async (message, serverQueue) => {
