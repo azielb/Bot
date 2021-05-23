@@ -23,20 +23,16 @@ new Scraper({
     console.log(`${SCRAPE_ERROR_MESSAGE} ${e}`);
 })
 
-const clamp = function(num, min, max) {
-    return Math.min(Math.max(num, min), max)
-}
-
 module.exports = {
     name: "monkey",
     aliases: ['m'],
     description: "Sends a random monkey image to a channel",
-    async execute(_, message) {
+    async execute(client, message) {
         if (!ready) {
             message.channel.send('Still caching monkey images.');
             return;
         }
-        const index = clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
+        const index = client.clamp(Math.floor(Math.random() * results.length), 0, results.length - 1);
         message.channel.send(results[index].url).catch(() => {
             message.channel.send(ERROR_MESSAGE);
         })
