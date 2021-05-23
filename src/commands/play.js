@@ -54,7 +54,7 @@ module.exports = {
 
 const disconnectBot = async(message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
-    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL)
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     
     if (!serverQueue) {
        return message.guild.me.voice.channel.leave();
@@ -68,6 +68,7 @@ const disconnectBot = async(message, serverQueue) => {
 
 const loopAndUnloopQueue = async (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
 
     serverQueue.looped = !serverQueue.looped;
@@ -76,6 +77,7 @@ const loopAndUnloopQueue = async (message, serverQueue) => {
 
 const getCurrent = async (message, serverQueue, client) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
 
     var str = `\`${serverQueue.videos[0].title} (${serverQueue.videos[0].duration})\`\n`
@@ -91,19 +93,24 @@ const getCurrent = async (message, serverQueue, client) => {
 
 const skipVideo = async (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
+    
     serverQueue.connection.dispatcher.end();
 }
 
 const stopVideo = async (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
+    
     serverQueue.videos = []
     serverQueue.connection.dispatcher.end();
 }
 
 const getQueue = async (message, serverQueue, client) => {
     if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!message.guild.me.voice.channel) return message.channel.send(ERROR_MESSAGES.BOT_NOT_IN_VOICE_CHANNEL);
     if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
     
     var str = ""
