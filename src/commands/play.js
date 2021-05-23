@@ -2,9 +2,9 @@ const ytdl = require('ytdl-core')
 const ytSearch = require('yt-search')
 const queue = new Map();
 const ERROR_MESSAGES = {
-    NOT_IN_VOICE_CHANNEL: 'You must be in a voice channel to execute this command.',
-    INCORRECT_PERMISSIONS: 'You do not have permission to execute this command.',
-    NO_VIDEOS_IN_QUEUE: 'There are no videos in the queue.',
+    NOT_IN_VOICE_CHANNEL: '❌ You must be in a voice channel to execute this command.',
+    INCORRECT_PERMISSIONS: '❌ You do not have permission to execute this command.',
+    NO_VIDEOS_IN_QUEUE: '❌There are no videos in the queue.',
     ERROR_EXECUTING_COMMAND: '❌ Something went wrong executing this command.',
     ERROR_FINDING_VIDEO: '❌ Error finding video.',
     ERROR_CONNECTING_TO_VOICE_CHANNEL: '❌ Error connecting to the voice channel.',
@@ -111,7 +111,7 @@ const convertToHMS = async (time) => {
     if (hours > 0) {
         output += `${hours}:${(minutes < 10 ? '0' : "")}`;
     }
-    
+
     output += `${minutes}:${(seconds < 10 ? '0' : "")}`;
     output += seconds
     return output;
