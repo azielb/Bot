@@ -32,7 +32,7 @@ module.exports = {
                 setTimeout(() => {
                     if ((!oldState.channel.members.size - 1) || !queue.get(message.guild.id))
                         oldState.channel.leave();
-                }, 60 * 1000 * 2);
+                }, 1000 * 60 * 2);
         })
 
         try {
@@ -61,21 +61,6 @@ const getCurrent = async (message, serverQueue, client) => {
         .addField(str, '\u200B', true)
 
     return message.channel.send(embed)
-}
-
-const playVideo = async (guild, video) => {
-    const entry = queue.get(guild.id);
-
-    if (!video) {
-        return queue.delete(guild.id);
-    }
-
-    const stream = ytdl(video.url, { filter: 'audioonly' });
-    entry.connection.play(stream, { seek: 0, volume: 0.5 }).on('finish', () => {
-        entry.videos.shift();
-        playVideo(guild, entry.videos[0])
-    })
-    await entry.textChannel.send(`🎵🎵 Now playing: \`${video.title}\``)
 }
 
 const skipVideo = async (message, serverQueue) => {
@@ -125,6 +110,21 @@ const convertToMinutesAndSeconds = async (time) => {
         return `${minutes}:0${seconds}`
     }
     return `${minutes}:${seconds}`
+}
+
+const playVideo = async (guild, video) => {
+    const entry = queue.get(guild.id);
+
+    if (!video) {
+        return queue.delete(guild.id);
+    }
+
+    const stream = ytdl(video.url, { filter: 'audioonly' });
+    entry.connection.play(stream, { seek: 0, volume: 0.5 }).on('finish', () => {
+        entry.videos.shift();
+        playVideo(guild, entry.videos[0])
+    })
+    await entry.textChannel.send(`🎵🎵 Now playing: \`${video.title}\``)
 }
 
 const play = async (message, entry, args, voiceChannel) => {
