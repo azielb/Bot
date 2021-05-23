@@ -106,11 +106,12 @@ const convertToHMS = async (time) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-
     var output = "";
+    
     if (hours > 0) {
         output += `${hours}:${(minutes < 10 ? '0' : "")}`;
     }
+    
     output += `${minutes}:${(seconds < 10 ? '0' : "")}`;
     output += seconds
     return output;
