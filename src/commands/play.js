@@ -4,6 +4,7 @@ const queue = new Map();
 const ERROR_MESSAGES = {
     NOT_IN_VOICE_CHANNEL: '❌ You must be in a voice channel to execute this command.',
     INCORRECT_PERMISSIONS: '❌ You do not have permission to execute this command.',
+    NO_QUERY: '❌ Please enter keywords or a youtube link to query.',
     NO_VIDEOS_IN_QUEUE: '❌There are no videos in the queue.',
     ERROR_EXECUTING_COMMAND: '❌ Something went wrong executing this command.',
     ERROR_FINDING_VIDEO: '❌ Error finding video.',
@@ -12,7 +13,7 @@ const ERROR_MESSAGES = {
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'skip', 'sk', 'stop', 'st', 'queue', 'q', 'current', 'c'],
+    aliases: ['p', 'skip', 'sk', 'stop', 'st', 'queue', 'q', 'current', 'c', 'loop', 'l', 'disconnect', 'd'],
     description: 'Music bot functionalities',
     async execute(client, message, args, cmd) {
         const voiceChannel = message.member.voice.channel;
@@ -41,11 +42,31 @@ module.exports = {
             else if (cmd === 'stop' || cmd === 'st') stopVideo(message, entry)
             else if (cmd === 'queue' || cmd === 'q') getQueue(message, entry, client)
             else if (cmd === 'current' || cmd === 'c') getCurrent(message, entry, client)
+            else if (cmd === 'loop' || cmd === 'l') loopAndUnloopQueue(message, entry)
+            else if (cmd === 'disconnect' || cmd === 'd') disconnectBot(message, entry, client)
         } catch (error) {
             message.channel.send(ERROR_MESSAGES.ERROR_EXECUTING_COMMAND);
             console.error(error);
         }
     }
+}
+
+const disconnectBot = async(message, serverQueue) => {
+    if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
+    
+    stopVideo(message, serverQueue).then(() => {
+        serverQueue.voiceChannel.leave();
+        return queue.delete(message.guild.id);
+    })
+}
+
+const loopAndUnloopQueue = async (message, serverQueue) => {
+    if (!message.member.voice.channel) return message.channel.send(ERROR_MESSAGES.NOT_IN_VOICE_CHANNEL);
+    if (!serverQueue) return message.channel.send(ERROR_MESSAGES.NO_VIDEOS_IN_QUEUE);
+
+    serverQueue.looped = !serverQueue.looped;
+    return message.channel.send(serverQueue.looped ? "✔️ The queue is now looped." : "❌ The queue has been unlooped.")
 }
 
 const getCurrent = async (message, serverQueue, client) => {
@@ -126,15 +147,21 @@ const playVideo = async (guild, video) => {
 
     const stream = ytdl(video.url, { filter: 'audioonly' });
     entry.connection.play(stream, { seek: 0, volume: 0.5 }).on('finish', () => {
-        entry.videos.shift();
-        playVideo(guild, entry.videos[0])
+        if (!entry.looped) {
+            entry.videos.shift();
+            playVideo(guild, entry.videos[0]);
+        } else {
+            entry.videos.push(entry.videos.shift());
+            playVideo(guild, entry.videos[0]);
+        }
     })
     await entry.textChannel.send(`🎵🎵 Now playing: \`${video.title}\``)
 }
 
 const play = async (message, entry, args, voiceChannel) => {
-    if (!args.length) return message.channel.send('Invalid arguments')
-    let vid = {}
+    if (!args.length) return message.channel.send(ERROR_MESSAGES.NO_QUERY)
+    
+    var vid = {}
 
     if (ytdl.validateURL(args[0])) {
         const vidInfo = await ytdl.getInfo(args[0])
@@ -159,6 +186,7 @@ const play = async (message, entry, args, voiceChannel) => {
 
     if (!entry) {
         const entry = {
+            looped: false,
             voiceChannel: voiceChannel,
             textChannel: message.channel,
             connection: null,
