@@ -9,8 +9,8 @@ module.exports = (client) => {
     client.users.fetch(process.env.OWNER_ID).then((me) => {
         client.user.setAvatar(me.displayAvatarURL({
             format: "jpg"
-        })).then(async avatar => {
-            client.avatar = avatar;
+        })).then(async user => {
+            client.avatar = user.avatar;
         }).catch(async () => {
             client.avatar = await client.users.cache.get(client.user.id).avatarURL();
         });
