@@ -1,11 +1,9 @@
-const fetch = require('node-fetch')
-
 module.exports = {
     name: "fact",
     aliases: ['f'],
     description: "Sends a random fact",
-    async execute(client, message, args) {
-        fetch('https://uselessfacts.jsph.pl/random.json?language=en').then(async response => {
+    async execute(client, message) {
+        client.fetch('https://uselessfacts.jsph.pl/random.json?language=en').then(async response => {
             const data = await response.json()
             message.channel.send(data.text)
         }).catch(err => {

@@ -1,8 +1,10 @@
 require("dotenv").config();
 const discord = require('discord.js');
 const DisTube = require("distube");
+const fetch = require('node-fetch')
 const client = new discord.Client();
 
+client.fetch = fetch
 client.discord = discord
 client.distube = new DisTube(client, {searchSongs: false, emitNewSongOnly: true});
 client.commands = new discord.Collection();
