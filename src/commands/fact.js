@@ -1,7 +1,7 @@
 module.exports = {
     name: "fact",
     aliases: ['f'],
-    description: "Sends a random fact",
+    description: "Sends a random useless fact",
     async execute(client, message) {
         client.fetch('https://uselessfacts.jsph.pl/random.json?language=en').then(async response => {
             const data = await response.json()
