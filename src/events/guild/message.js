@@ -11,6 +11,7 @@ const messages = [
     "What do you want?",
     "https://media.discordapp.net/attachments/565643666828427284/844543541798633522/image0.gif",
     "https://cdn.discordapp.com/attachments/764447332288561152/844615536808558622/image0.gif",
+    "https://tenor.com/view/ok-and-gif-19051857",
 ]
 
 module.exports = (client, message) => {
