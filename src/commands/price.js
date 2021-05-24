@@ -10,7 +10,6 @@ module.exports = {
             message.channel.send("Please enter a currency symbol to query"); return;
         }
 
-        const avatar = await client.users.cache.get(client.user.id).avatarURL();
         const SYMBOL = args.join(' ').toUpperCase();
         var symbols = new Array(); symbols.push(SYMBOL);
 
@@ -22,7 +21,7 @@ module.exports = {
                     .setColor('#00FF00')
                     .setTitle(name)
                     .addField(dominance, '\u200B', true)
-                    .setAuthor(process.env.BOT_NAME, avatar)
+                    .setAuthor(process.env.BOT_NAME, client.avatar)
                     .setDescription('Price: ' + '$' + quote_data.data[`${SYMBOL}`].quote.USD.price + ' [USD]')
                     .setTimestamp()
     

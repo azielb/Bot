@@ -4,16 +4,15 @@ module.exports = (client) => {
     client.user.setActivity('DN', {
         type: "WATCHING",
     });
-    // client.user.setActivity(`${process.env.PREFIX}commands | ${process.env.PREFIX}help`, {
-    //     type: "WATCHING",
-    // });
-    
+
     //Sets bot avatar to whatever my avatar is at the time.
     client.users.fetch(process.env.OWNER_ID).then((me) => {
         client.user.setAvatar(me.displayAvatarURL({
             format: "jpg"
-        })).catch((err) => {
-            console.log("Failed to set avatar: " + err);
+        })).then(async avatar => {
+            client.avatar = avatar;
+        }).catch(async () => {
+            client.avatar = await client.users.cache.get(client.user.id).avatarURL();
         });
     }).catch(() => {
         console.log("FAILED TO FETCH MY OWNER?!");

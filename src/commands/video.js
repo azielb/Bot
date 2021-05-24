@@ -14,7 +14,6 @@ module.exports = {
     description: "Sends a the specified video (type .v to get a list of all videos)",
     async execute(client, message, args) {
         const video = args.join(" ").toLowerCase();
-        const avatar = await client.users.cache.get(client.user.id).avatarURL();
 
         message.channel.send(videos[`${video}`]).catch(() => {
             const embed = new client.discord.MessageEmbed()

@@ -4,11 +4,10 @@ module.exports = {
     aliases: ['cmds', 'cmd', 'help'],
     async execute(client, message) {
         const id = message.author.id;
-        const avatar = await client.users.cache.get(client.user.id).avatarURL();
         const embed = new client.discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Commands')
-            .setAuthor(process.env.BOT_NAME, avatar)
+            .setAuthor(process.env.BOT_NAME, client.avatar)
             .setDescription(`Prefix: \`${process.env.PREFIX}\``)
             .setTimestamp()
 
