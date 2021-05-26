@@ -10,7 +10,7 @@ module.exports = (client) => {
         client.user.setAvatar(me.displayAvatarURL({
             format: "jpg"
         })).then(async user => {
-            client.avatar = user.avatar;
+            client.avatar = await user.displayAvatarURL();
         }).catch(async () => {
             client.avatar = await client.users.cache.get(client.user.id).avatarURL();
         });
