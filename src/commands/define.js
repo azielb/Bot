@@ -7,20 +7,18 @@ module.exports = {
 
         client.fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${args[0]}?key=${process.env.WEBSTER_API_KEY}`).then(async response => {
             const data = await response.json()
-            var str = "";
             var count = 1;
-
-            data[0].shortdef.forEach((definition) => {
-                str += `${count}. ${definition}\n`;
-                count += 1;
-            })
 
             const embed = new client.discord.MessageEmbed()
                 .setColor('#FFFF00')
-                .setTitle("Definitions")
+                .setTitle(`Definitions for \`${args[0]}\``)
                 .setAuthor(process.env.BOT_NAME, client.avatar)
-                .addField(str, '\u200B', true)
                 .setTimestamp()
+
+            data[0].shortdef.forEach((definition) => {
+                embed.addField(`${count}`, definition, false);
+                count += 1;
+            })
 
             return message.channel.send(embed);
         }).catch(err => {
