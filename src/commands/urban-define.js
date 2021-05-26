@@ -16,7 +16,7 @@ module.exports = {
                 .setTimestamp()
 
             data.list.forEach((entry) => {
-                embed.addField(`${count}:`, entry.definition, true);
+                embed.addField(`${count}:`, entry.definition, false);
                 count += 1;
             })
 
