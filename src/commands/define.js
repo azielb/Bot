@@ -9,7 +9,7 @@ module.exports = {
             const data = await response.json()
             var str = "";
             var count = 1;
-            
+
             data[0].shortdef.forEach((definition) => {
                 str += `${count}. ${definition}\n`;
                 count += 1;
@@ -21,7 +21,7 @@ module.exports = {
                 .setAuthor(process.env.BOT_NAME, client.avatar)
                 .addField(str, '\u200B', true)
                 .setTimestamp()
-                
+
             return message.channel.send(embed);
         }).catch(err => {
             console.error(err);
