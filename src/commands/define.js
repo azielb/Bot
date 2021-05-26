@@ -28,7 +28,7 @@ module.exports = {
             return message.channel.send(embed);
         }).catch(err => {
             console.error(err);
-            return message.channel.send('Something went wrong while getting the definition!');
+            return message.channel.send(`Something went wrong while getting the definition for ${args}!`);
         })
     }
 }
