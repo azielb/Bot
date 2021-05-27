@@ -26,9 +26,10 @@ module.exports = {
             })
 
             return message.channel.send(embed);
-        }).catch(err => {
-            console.error(err);
-            return message.channel.send(`Something went wrong while getting the definition for ${args}!`);
+        }).catch(() => {
+            message.channel.send(`This definition is too long, here's the link to the page instead: \nhttps://www.urbandictionary.com/define.php?term=${args}`).catch(() => {
+                return message.channel.send(`Something went wrong while getting the definition for ${args}!`)
+            });
         })
     }
 }
